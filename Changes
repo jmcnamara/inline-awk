@@ -1,0 +1,13 @@
+Revision history for Perl extension Inline::Awk.
+
+0.03  Tue Nov 15 2001
+		First CPAN release.
+
+0.02  Tue Nov 13 2001
+		First fully functional version.
+		Added awk() functions.
+		Tested with regression test.
+
+0.01  Thu Aug 9 2001
+	  	Original version.
+
