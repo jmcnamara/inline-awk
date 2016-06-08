@@ -55,18 +55,6 @@ INSTALLATION
         make test
         make install
 
-	ActivePerl users can use PPM as follows:
-
-		C:\ppm
-		PPM> set repository tmp http://homepage.eircom.net/~jmcnamara/perl
-		PPM> install Inline-Awk
-		PPM> quit
-		C:\>
-
-	If this fails try the following:
-
-		PPM>install http://homepage.eircom.net/~jmcnamara/perl/Inline-Awk.ppd
-
 
 ================================================================================
 AUTHOR
