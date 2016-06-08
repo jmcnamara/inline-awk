@@ -18,7 +18,7 @@ require Inline;
 
 use vars qw($VERSION @ISA);
 @ISA = qw(Inline);
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 
 ###############################################################################
@@ -151,7 +151,7 @@ sub build {
 
     # Separate the main code from the subs.
     while (@code) {
-        last if $code[0] =~ /^sub \w+ {$/;
+        last if $code[0] =~ /^sub \w+ \{$/;
         push @main, shift @code;
     }
 
@@ -254,14 +254,6 @@ Inline::Awk - Add awk code to your Perl programs.
 
 
 
-=head1 VERSION
-
-
-This document refers to version 0.03 of Inline::Awk, released November 15, 2001.
-
-
-
-
 =head1 SYNOPSIS
 
 
@@ -269,12 +261,12 @@ Call an awk function from a Perl program:
 
 
     use Inline AWK;
-    
+
     hello("awk");
-    
+
     __END__
     __AWK__
-    
+
     function hello(str) {
         print "Hello " str
     }
@@ -282,12 +274,12 @@ Call an awk function from a Perl program:
 Or, call an entire awk program using the C<awk()> function:
 
     use Inline AWK;
-    
+
     awk(); # operates on @ARGV by default
-    
+
     __END__
     __AWK__
-    
+
     # Count the number of lines in a file
     END { print NR }
 
@@ -297,29 +289,29 @@ Or, call an entire awk program using the C<awk()> function:
 =head1 DESCRIPTION
 
 
-The C<Inline::Awk> module allows you to include awk code in your Perl program. You can call awk functions or entire programs. 
+The C<Inline::Awk> module allows you to include awk code in your Perl program. You can call awk functions or entire programs.
 
 Inline::Awk works by converting awk code into Perl code using the C<a2p> utility which comes as standard with Perl. This means that you don't require awk to use the Inline::Awk module.
 
 Here is an example of how you would incorporate some awk functions into a Perl program:
 
     use Inline AWK;
-    
+
     $num = 5;
     $str = 'ciao';
-    
+
     print square($num), "\n";
     print echo($str),   "\n";
-    
+
     print "Now, back to our normal program.\n"
-    
+
     __END__
     __AWK__
-    
+
     function square(num) {
         return num * num
     }
-    
+
     function echo(str) {
         return str " " str
     }
@@ -327,22 +319,22 @@ Here is an example of how you would incorporate some awk functions into a Perl p
 You can call an awk program via the C<awk()> function. Here is a simple version of the Unix utility C<wc> which counts the number of lines, words and characters in a file:
 
     use Inline AWK;
-    
+
     awk();
-    
+
     __END__
     __AWK__
-    
+
     # Simple minded wc
     BEGIN {
         file = ARGV[1]
     }
-    
+
     {
         words += NF
         chars += length($0) +1 # +2 in DOS
     }
-    
+
     END {
         printf("%7d%8d%8d %s\n", NR, words, chars, file)
     }
@@ -381,12 +373,12 @@ As usual, the empty diamond operator, C<E<lt>E<gt>> will operate on C<@ARGV>, sh
 An awk program doesn't loop over a file if it contains a BEGIN block only:
 
     use Inline AWK;
-    
-    awk(); 
-    
+
+    awk();
+
     __END__
     __AWK__
-    
+
     BEGIN { print "Hello, world!" }
 
 
@@ -404,12 +396,12 @@ You can use C<Inline::Awk> in any of the following ways. See also the Inline doc
 Method 1 (the standard method):
 
     use Inline AWK;
-    
+
     # Call the awk code
-    
+
     __END__
     __AWK__
-    
+
     # awk code here
 
 Method 2 (for simple code):
@@ -421,11 +413,11 @@ Method 3 (requires Inline::Files):
 
     use Inline::Files;
     use Inline AWK;
-    
+
     # Call the awk code
-    
+
     __AWK__
-    
+
     # awk code here
 
 Note, any of the following use declarations are valid:
@@ -445,7 +437,7 @@ However, they should be matched by a corresponding data section:
 
 =head1 HOW Inline::Awk works
 
-C<Inline::Awk> in based on the same framework that underlies all of the C<Inline::> modules. This is described in detail in the C<Inline-API> document. 
+C<Inline::Awk> in based on the same framework that underlies all of the C<Inline::> modules. This is described in detail in the C<Inline-API> document.
 
 Inline::Awk works by filtering awk code through the Perl utility C<a2p>. The a2p utility converts awk code to Perl code using a parser written in C and YACC. Inline::Awk pre and post-processes the code going through a2p to obtain a result that is as close as possible to the output of a real awk compiler. However, it doesn't always get it completely right, see L<BUGS>.
 
@@ -553,7 +545,7 @@ Also, C<Inline::Awk> serves as an atonement for C<Inline::PERL>. ;-)
 
 Inline.pm, the Inline API and Foo.pm.
 
-"The AWK Programming Language" by Alfred V. Aho, Brian W. Kernighan, and Peter J. Weinberger, Addison-Wesley, 1988. ISBN 0-201-07981-X. 
+"The AWK Programming Language" by Alfred V. Aho, Brian W. Kernighan, and Peter J. Weinberger, Addison-Wesley, 1988. ISBN 0-201-07981-X.
 
 
 

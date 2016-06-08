@@ -7,5 +7,5 @@ WriteMakefile(
     'VERSION_FROM'  => 'Awk.pm',
     'NEEDS_LINKING' => 0,
     'PREREQ_PM'     => {Inline => 0},
-    'dist'          => {COMPRESS => 'gzip -best', SUFFIX => 'gz'},
+    'dist'          => {COMPRESS => 'gzip --best', SUFFIX => 'gz'},
 );
